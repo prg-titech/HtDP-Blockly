@@ -2,9 +2,6 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Blockly for the Web Codelab</title>
     <link rel="stylesheet" href="styles/index.css" />
   </head>
 
@@ -13,30 +10,14 @@
       <h1>Design Recipe</h1>
     </header>
     <main>
-      
+      <button class="check" id="check" onclick="allcheck()">check</button>
+      <div id="alert" class="alert"></div>
       <div class="blockly-editor1" id="blockly-editor1">
         <div id="blocklyDiv" style="height: 600px; width: 880px"></div>
         <xml id="toolbox" style="display: none">
           <category name="Step1">
-            <category name="Step1-a" expanded="true">
-              
+            <category name="Step1-a" expanded="false">
               <label text="Data definition" web-class="myLabelStyle"></label>
-              <!--
-              <sep gap="10"></sep>
-              <label text="Datatype name and alternatives"></label>
-              <sep gap="5"></sep>
-              <block type="define_datatype" id="define_datatype"></block>
-              <label text="Alternative"></label>
-              <sep gap="5"></sep>
-              <block type="alternative"></block>
-              <label text="Non-self-referential argument"></label>
-              <sep gap="5"></sep>
-              <block type="arg"></block>
-              <label text="Self-referential argument"></label>
-              <sep gap="5"></sep>
-              <block type="arg_self_reference"></block>
-              <sep gap="70"></sep>
-              -->
               <label text="Structure name and fields"></label>
               <sep gap="5"></sep>
               <block type="define_struct"></block>
@@ -55,13 +36,13 @@
       </div>
       <!--<button class="button" id="done" onclick="handlePlay()">Done</button>-->
       <!--<div class="display"><p id="display"></p></div>-->
-      <p>ファイル名<input type="text" id="file_name" name="file_name"></p>.
+      <p><input type="text" id="file_name" name="file_name" placeholder="ファイル名"></p>.
       <select name="file_type" id="file_type">
         <option value=".rkt">racket</option>
         <option value=".txt">text</option>
       </select>
       <button class="button" id="download" onclick="download()">download</button>
-      <div id="editor" style="height: 600px; width: 400px;"  class ="text-editor"></div>
+      <div id="editor" class ="text-editor"></div>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
       <script defer src="https://embed.scalafiddle.io/integration.js"></script>
@@ -71,7 +52,7 @@
       <script src="scripts/sample2.js"></script>
       <script src="scripts/sample3.js"></script>
       <script src="scripts/sample4.js"></script>
-      <script src="scripts/custom_renderer.js"></script>
+      <script src="scripts/alert.js"></script>
       <script src="scripts/main.js"></script>
     </main>
   </body>

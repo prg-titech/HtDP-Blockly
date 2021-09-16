@@ -5,11 +5,13 @@ main {
   overflow: hidden;
   overflow-x: scroll;
   height: 2000px;
+  background-color: #f7fafc;
 }
 
 header {
   background-color: rgb(45, 0, 128);
   width: 100%;
+  
 }
 
 h1 {
@@ -22,7 +24,6 @@ h1 {
 }
 
 .blockly-editor1 {
-  
   position: absolute;
   top: 64px;
   left: 0px;
@@ -43,8 +44,10 @@ h1 {
 }
 .text-editor {
   position: absolute;
-  top: 64px;
+  top: 44px;
   left: 900px;
+  height: 600px; 
+  width: 400px; 
 
 }
 
@@ -58,32 +61,21 @@ h1 {
 
 .button{
   position: absolute;
-  top: 30px;
-  right: 40px;
-/*
-  margin: 1em 0;
-  float: right;
-  display:block;
- 
-  
-  
-  text-decoration:none;
-  text-align:center;
-  
-   height: 40px;
-  width: 100px;
-  background-color:#999999;
-  font-size: 18px;
-  font-weight:400;
-  color:#FFFFFF;
-  border-radius:5px;
-  transition: all 0.5s 0s ease;*/
+  top: 28px;
+  left: 1200px;
+  color: #000;
+  background-color: #fff;
+  border-bottom: 5px solid #d3d3d3;
   }
-  /*
+  
   .button:hover{
   color:#000000; 
-  background-color:#FFFFFF;
-  }*/
+  background-color:#F5F5F5;
+  margin-top: 3px;
+  color: #000;
+  background: #f5f5f5;
+  border-bottom: 2px solid #d3d3d3;
+  }
   
 
 .blocklyFlyoutLabel.myLabelStyle>.blocklyFlyoutLabelText{
@@ -93,12 +85,40 @@ h1 {
 p{
   position: absolute;
   top: 10px;
-  right: 240px;
+  left: 970px;
 }
 
 select{
   position: absolute;
-  top: 27px;
-  right: 160px;
-  font-size: 18px;
+  top: 31px;
+  left: 1130px;
+  font-size: 14px;
 }
+
+.check{
+  position: absolute;
+  top: 20px;
+  left: 0px;
+
+}
+
+.alert:before {
+	content: '';
+	position:absolute;
+	left:-20px;
+	border:12px solid transparent;
+	border-right:12px solid #808080;
+}
+.alert{
+	position:absolute;
+	background-color:#808080;
+  top:20px;
+  left: 50px;
+	color:white;
+	font-size:1.2em;
+	border-radius:0.5em;
+	padding:10px;
+	margin:-0.8em 0.5em 0 1em;
+  display:none;
+}
+

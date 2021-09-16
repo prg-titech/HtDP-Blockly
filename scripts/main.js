@@ -6,7 +6,7 @@ var workspace = Blockly.inject("blocklyDiv", {
   zoom:
   {controls: true,
    wheel: false,
-   startScale: 1.0,
+   startScale: 0.9,
    maxScale: 3,
    minScale: 0.3,
    scaleSpeed: 1.2,
@@ -26,6 +26,7 @@ workspace.registerButtonCallback("make_step1b", make_step1b);
 workspace.registerButtonCallback("make_step2", make_step2);
 workspace.registerButtonCallback("make_step3", make_step3);
 workspace.registerButtonCallback("make_step4", make_step4);
+workspace.registerButtonCallback("make_step5", make_step5);
 
 function getBlocksByType(type) {
   var blocks = [];
@@ -38,7 +39,7 @@ function getBlocksByType(type) {
 }
 
 function make_step1b() {
-  
+  if(check_step1()){
   if (getBlocksByType("define_datatype").length > 0 && getBlocksByType("alternative").length > 0) {
     var data_type_for_ex = "";
 		var alt_num = 1;
@@ -121,15 +122,12 @@ function make_step1b() {
       struct += ''
       struct_block_n = 1;
       for (const struct_block of getBlocksByType("define_struct")) {
-        var struct_message = "(make-%1";
-        var struct_arg = [{
-          "type": "field_input",
-          "name": "struct_specific_name",
-        }];
+        var struct_message = "(make-"+struct_block.getFieldValue("struct_name");
+        var struct_arg = [];
         var struct_shadow = ""
         var max_struct_arg_num = struct_block.getChildren()[0].getDescendants(true).length;
         for (var struct_arg_num = 1; struct_arg_num <= max_struct_arg_num; struct_arg_num++) {
-          struct_message += " %" + String(struct_arg_num + 1)
+          struct_message += " %" + String(struct_arg_num)
           struct_arg.push({
             "type": "input_value",
             "name": "struct_specific_arg" + String(struct_arg_num),
@@ -157,7 +155,7 @@ function make_step1b() {
           "inputsInline": true,
         }]);
         Blockly.JavaScript["make_struct" + String(struct_block_n)] = function (block) {
-          var ret = "(make-"+block.getFieldValue("struct_specific_name")
+          var ret = "(make-"+struct_block.getFieldValue("struct_name")
           for (let a = 1; a<=block.getChildren().length; a++){
             ret += Blockly.JavaScript.statementToCode(block, "struct_specific_arg"+String(a));
           }
@@ -166,9 +164,7 @@ function make_step1b() {
 				
 
         struct += '<block type="make_struct' + String(struct_block_n) + '">' + 
-										'<field name="struct_specific_name">'+
-											'<text>' + struct_block.getFieldValue("struct_name") + '</text>'+
-										'</field>' +
+				
 										struct_shadow + 
 										'<value name="next_struct_specific_arg">'+
 											'<shadow type ="struct_specific_arg"></shadow>'+
@@ -178,18 +174,22 @@ function make_step1b() {
       }
       struct += '<label text="Argument"></label><sep gap="5"></sep><block type="struct_specific_arg"></block>'
     }
-    document.getElementById("step1b").innerHTML = '<label text="Define data examples" web-class="myLabelStyle"></label><sep gap="10"></sep>'+ 
-   // '<label text="Datatype constructor"></label><sep  gap="15"></sep>' + data_type_for_ex 
-   // + '<label text="Argument"></label><sep gap="5"></sep><block type ="example_arg"></block>' +
-    //'<sep  gap="70"></sep>'+
-    '<label text="Structure constructor"></label>'
-		+'<sep gap="5"></sep>' +  struct + '<sep  gap="100"></sep>' + '<button text="Next Step" callbackKey="make_step2"></button>';
-    document.getElementById("step1b").hidden = "false";
-    workspace.updateToolbox(document.getElementById("toolbox"));
-  
+    if(getBlocksByType("define_struct").length > 0 ||(getBlocksByType("define_datatype").length > 0 && getBlocksByType("alternative").length > 0)){
+      document.getElementById("step1b").innerHTML = '<label text="Define data examples" web-class="myLabelStyle"></label><sep gap="10"></sep>'+ 
+      // '<label text="Datatype constructor"></label><sep  gap="15"></sep>' + data_type_for_ex 
+      // + '<label text="Argument"></label><sep gap="5"></sep><block type ="example_arg"></block>' +
+       //'<sep  gap="70"></sep>'+
+       '<label text="Structure constructor"></label>'
+       +'<sep gap="5"></sep>' +  struct + '<sep  gap="100"></sep>' + '<button text="Next Step" callbackKey="make_step2"></button>';
+       document.getElementById("step1b").hidden = "false";
+       workspace.updateToolbox(document.getElementById("toolbox"));
+    }
+    
+  }
 }
 
 function make_step2() {
+  if(check_step1b()){
   document.getElementById("step2").innerHTML = 
 	'<label text="Purpose, Signature, Header" web-class="myLabelStyle"></label><sep  gap="10"></sep>' + 
 		'<block type="template_purpose"><next><block type="template_signature"><next><block type="template_define"></block></next></next></block>' + 
@@ -209,9 +209,11 @@ function make_step2() {
 		'<button text="Next Step" callbackKey="make_step3"></button>';
 	document.getElementById("step2").hidden = "false";
   workspace.updateToolbox(document.getElementById("toolbox"));
+  }
 }
 
 function make_step3() {
+  if(check_step2()){
   if (getBlocksByType("template_define").length == 1 && getBlocksByType("inputs").length > 0) {
     message = "Given "
     args = []
@@ -233,7 +235,7 @@ function make_step3() {
       type: "io_examples",
       message0: message,
       args0: args,
-      output: "VALUE",
+      //output: "VALUE",
       inputsInline: true,
       colour: 90,
       tooltip: "io_examples",
@@ -293,12 +295,11 @@ function make_step3() {
     document.getElementById("step3").hidden = "false";
     workspace.updateToolbox(document.getElementById("toolbox"));
   }
-  else if(getBlocksByType("template_define").length >1){
-    alert("定義する関数は1つまで")
-  }
+}
 }
 
 function make_step4() {
+  if(check_step3()){
   template_block = ""
   for (const temp_block of getBlocksByType("template_purpose")) {
     template_block += Blockly.Xml.domToPrettyText(Blockly.Xml.blockToDom(temp_block, true))
@@ -349,9 +350,14 @@ function make_step4() {
 		//'<block type="select_hint_template_hint"><value name = "input_select"><block type = "template_input"></block></value></block>' + 
 	//	'<block type="struct_hint_template_hint"><value name = "input_struct"><block type = "template_input"></block></value></block>' + 
 		'<sep  gap="100"></sep>' + 
-		'<button text="Next Step"></button>';
+		'<button text="Next Step" callbackKey="make_step5"></button>';
   document.getElementById("step4").hidden = "false";
   workspace.updateToolbox(document.getElementById("toolbox"));
+}
+}
+
+function make_step5(){
+  check_step4()
 }
 
 function createEditor() {
@@ -400,11 +406,13 @@ function download(){
   let code = ace.edit("editor").getValue()
   const date1 = new Date();
   
-  downloadFiles(code,document.getElementById("file_name").value + add0(date1.getMonth()+1)+add0(date1.getDate())+add0(date1.getHours()) + 
-  add0(date1.getMinutes()) + add0(date1.getSeconds()) +document.getElementById("file_type").value,"")
+  downloadFiles(code,document.getElementById("file_name").value// + add0(date1.getMonth()+1)+add0(date1.getDate())+add0(date1.getHours()) + 
+  //add0(date1.getMinutes()) + add0(date1.getSeconds()) 
+  +document.getElementById("file_type").value,"")
 
 
 }
+
 
 
 function handlePlay() {
@@ -419,8 +427,14 @@ function handlePlay() {
     console.log(error);
   }
 }
-
+function changeStructureFieldNumber(){
+  for (const struct_block of getBlocksByType("define_struct")) {
+    struct_block.setFieldValue(struct_block.getDescendants(true).filter(function(value){return value.type=="struct_arg"}).length,"struct_arg_number")
+  }
+}
 function Play(event) {
+  changeStructureFieldNumber()
+
   let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
   try {
 	//	Blockly.getMainWorkspace().cleanUp();
@@ -435,3 +449,5 @@ function Play(event) {
 
 
 workspace.addChangeListener(Play);
+
+
