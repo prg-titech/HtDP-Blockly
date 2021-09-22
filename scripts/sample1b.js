@@ -58,7 +58,7 @@ Blockly.defineBlocksWithJsonArray([
                 "name": "struct_specific_arg_value",
             },
         ],
-        "output": "VALUE",
+        "output": "struct_arg",
         "colour": 0,
         "tooltip": "scruct_arg",
         

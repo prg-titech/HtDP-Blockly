@@ -136,6 +136,7 @@ Blockly.defineBlocksWithJsonArray([
             {
                 "type": "input_statement",
                 "name": "struct_field",
+                
             }
         ],
         "colour": 80,

@@ -7,13 +7,18 @@
 
   <body>
     <header>
-      <h1>Design Recipe</h1>
+      <h1>Question: Define a function that computes the distance from a given position to origin.</h1>
     </header>
     <main>
+      
       <button class="check" id="check" onclick="allcheck()">check</button>
+      <!--
+      <button class="undo" id="undo" onclick="undoAction()">Undo</button>
+      <button class="redo" id="redo" onclick="redoAction()">Redo</button>-->
       <div id="alert" class="alert"></div>
       <div class="blockly-editor1" id="blockly-editor1">
         <div id="blocklyDiv" style="height: 600px; width: 880px"></div>
+       
         <xml id="toolbox" style="display: none">
           <category name="Step1">
             <category name="Step1-a" expanded="false">
@@ -36,6 +41,7 @@
       </div>
       <!--<button class="button" id="done" onclick="handlePlay()">Done</button>-->
       <!--<div class="display"><p id="display"></p></div>-->
+      <p class="checkbox"><input type="checkbox"  id="show_code" onChange="Play()">Show Code</p>
       <p><input type="text" id="file_name" name="file_name" placeholder="ファイル名"></p>.
       <select name="file_type" id="file_type">
         <option value=".rkt">racket</option>
@@ -43,6 +49,7 @@
       </select>
       <button class="button" id="download" onclick="download()">download</button>
       <div id="editor" class ="text-editor"></div>
+      
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ace.js"></script>
       <script src="https://cdnjs.cloudflare.com/ajax/libs/ace/1.2.0/ext-language_tools.js"></script>
       <script defer src="https://embed.scalafiddle.io/integration.js"></script>

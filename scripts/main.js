@@ -17,10 +17,17 @@ var workspace = Blockly.inject("blocklyDiv", {
           colour: '#ccc',
           snap: true},
   scrollbars: false,
-
-    
-
 });
+
+function undoAction(){
+  workspace.undo(false);
+}
+function redoAction(){
+  workspace.undo(true);
+}
+
+
+
 
 workspace.registerButtonCallback("make_step1b", make_step1b);
 workspace.registerButtonCallback("make_step2", make_step2);
@@ -434,8 +441,8 @@ function changeStructureFieldNumber(){
 }
 function Play(event) {
   changeStructureFieldNumber()
-
-  let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
+  if(document.getElementById("show_code").checked){
+    let code = Blockly.JavaScript.workspaceToCode(Blockly.getMainWorkspace());
   try {
 	//	Blockly.getMainWorkspace().cleanUp();
 	var editor = createEditor();
@@ -445,9 +452,17 @@ function Play(event) {
   } catch (error) {
     console.log(error);
   }
+  }
+  else{
+    var editor = createEditor();
+    editor.getSession().setValue("");
+    return editor;
+  }
+
+  
 }
 
-
+var editor = createEditor();
 workspace.addChangeListener(Play);
 
 
