@@ -9,17 +9,18 @@ main {
 }
 
 header {
-  background-color: rgb(45, 0, 128);
+   background-color: rgb(45, 0, 128);
+   width: 100%;
+ }
 
-}
-
-h1 {
-  position: relative;
-  margin: 10 auto;
-  color: #000;
-  font-size: 1.2em;
-  line-height: 2.4em;
-}
+ h1 {
+   width: 400px;
+   position: relative;
+   margin: 0 auto;
+   color: #fff;
+   font-size: 1.8em;
+   line-height: 2.4em;
+ }
 
 .blockly-editor1 {
   position: absolute;
